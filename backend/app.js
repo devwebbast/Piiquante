@@ -5,9 +5,12 @@ const path = require('path') // package natif de node.js qui permet d'accéder a
 const userRoutes = require('./routes/users')
 const sauceRoutes = require('./routes/sauces')
 
+
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))  
+
+
 
 // Connexion à MongoDB
 mongoose.connect('mongodb+srv://piiquanteAdmin:uI7KdvuGQj0art7C@cluster0.l4dolg9.mongodb.net/piiquantedB?retryWrites=true&w=majority',
@@ -24,6 +27,9 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
     next()
 })
+
+
+
 
 app.use('/images', express.static(path.join(__dirname, 'images'))) // indique à Express qu'il faut gérer la ressource images de manière statique
 

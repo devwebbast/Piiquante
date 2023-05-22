@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
         const userId = decodedToken.userId // récupération de l'ID utilisateur
 
         if (req.body.userId && req.body.userId !== userId) { // si l'ID utilisateur est différent de celui du token
-            throw new Error('User ID non valable') // on renvoie une erreur            
+            throw "User ID non valable" // on renvoie une erreur            
         } else {
             next()
         } 
