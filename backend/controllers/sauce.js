@@ -3,9 +3,11 @@ const Sauce = require('../models/Sauce')
 
 // Création d'une sauce
 exports.createSauce = (req, res, next) => {
-    const sauceObject = req.body
+    const sauceObject = JSON.parse(req.body.sauce) // on transforme la chaîne de caractères en objet JS
+    delete sauceObject._id // on supprime l'id envoyé par le front-end car il sera créé par le serveur
     const sauce = new Sauce({ // création d'une nouvelle sauce
-        ...sauceObject // ... opérateur spread qui copie tous les éléments de req.body
+        ...sauceObject, // ... opérateur spread qui copie tous les éléments de req.body
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}}`
     })
     sauce.save()
         .then(() => res.status(201).json({ message: 'Sauce enregistrée avec succès !'}))
@@ -29,7 +31,12 @@ exports.getOneSauce = (req, res, next) => {
 
 //Modification et mise à jour d'une sauce
 exports.modifySauce = (req, res, next) => {
-    Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id }) 
+    const sauceObject = req.file ? {
+        ...JSON.parse(req.body.sauce), // on transforme la chaîne de caractères en objet JS
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}}`
+    } : { ...req.body }
+    
+    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }) 
         .then(() => res.status(200).json({ message: 'Sauce modifiée avec succès !'}))
         .catch(error => res.status(400).json({ error }))
 }

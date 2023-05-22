@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path') // package natif de node.js qui permet d'accéder au chemin de notre système de fichier
 
 const userRoutes = require('./routes/users')
 const sauceRoutes = require('./routes/sauces')
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use('/images', express.static(path.join(__dirname, 'images'))) // indique à Express qu'il faut gérer la ressource images de manière statique
 
 app.use('/api/auth', userRoutes)
 app.use('/api/sauces', sauceRoutes)
