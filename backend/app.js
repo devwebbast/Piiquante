@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const path = require('path') // package natif de node.js qui permet d'accéder au chemin de notre système de fichier
 // sécurisation des en-têtes HTTP
 const helmet = require('helmet')
-// Sécurisation bdd
+// Sécurisation de la bdd
 require('dotenv').config()
 
 const userRoutes = require('./routes/users')
@@ -13,7 +13,6 @@ const sauceRoutes = require('./routes/sauces')
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))  
-
 
 
 // Connexion à MongoDB
