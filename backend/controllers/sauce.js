@@ -1,4 +1,3 @@
-const express = require('express')
 const Sauce = require('../models/Sauce')
 
 // Création d'une sauce
